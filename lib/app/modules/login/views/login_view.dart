@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo/app/consts/app_colors.dart';
 import 'package:todo/app/consts/text_form_field_styles.dart';
+import 'package:todo/app/modules/register/bindings/register_binding.dart';
+import 'package:todo/app/modules/register/views/register_view.dart';
 import 'package:todo/app/routes/app_pages.dart';
 import 'package:todo/app/utils/validator.dart';
 

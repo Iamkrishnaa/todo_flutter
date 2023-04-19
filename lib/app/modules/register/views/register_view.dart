@@ -190,7 +190,17 @@ class RegisterView extends GetView<RegisterController> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                if (registerFormKey.currentState!.validate()) {
+                  Get.showOverlay(
+                    asyncFunction: () async {
+                      await controller.registerUser();
+                    },
+                    loadingWidget:
+                        const Center(child: CircularProgressIndicator()),
+                  );
+                }
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primaryColor,
               ),
