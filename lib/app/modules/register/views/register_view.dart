@@ -125,7 +125,7 @@ class RegisterView extends GetView<RegisterController> {
               filled: true,
               fillColor: AppColors.primaryColor.withOpacity(0.2),
               prefixIcon: const Icon(
-                Icons.person,
+                Icons.perm_identity_rounded,
               ),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16.0,
@@ -144,7 +144,7 @@ class RegisterView extends GetView<RegisterController> {
               filled: true,
               fillColor: AppColors.primaryColor.withOpacity(0.2),
               prefixIcon: const Icon(
-                Icons.person,
+                Icons.phone,
               ),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16.0,
