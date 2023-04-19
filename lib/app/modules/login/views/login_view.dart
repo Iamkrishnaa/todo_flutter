@@ -145,7 +145,9 @@ class LoginView extends GetView<LoginController> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.offAllNamed(Routes.HOME);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primaryColor,
               ),
