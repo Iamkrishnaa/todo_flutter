@@ -147,8 +147,17 @@ class LoginView extends GetView<LoginController> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {
-                Get.offAllNamed(Routes.HOME);
+              onPressed: () async {
+                if (loginFormKey.currentState!.validate()) {
+                  Get.showOverlay(
+                    asyncFunction: () async {
+                      await controller.loginUser();
+                    },
+                    loadingWidget: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primaryColor,
