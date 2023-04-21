@@ -30,6 +30,7 @@ class LoginController extends GetxController {
         StorageService storageService = Get.find();
         await storageService.storeAccessToken(
             accessToken: decodedResponse["accessToken"]);
+
         await storageService.storeRefreshToken(
             refreshToken: decodedResponse["refreshToken"]);
 

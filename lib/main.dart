@@ -15,7 +15,9 @@ void main() async {
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Application",
-      initialRoute: AppPages.INITIAL,
+      initialRoute: storageService.getAccesToken() == null
+          ? AppPages.INITIAL
+          : Routes.HOME,
       getPages: AppPages.routes,
     ),
   );

@@ -42,35 +42,39 @@ class HomeView extends GetView<HomeController> {
           Expanded(
             child: Container(
               color: Colors.white,
-              child: ListView.builder(
-                itemCount: 100,
-                padding: EdgeInsets.zero,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text("Todo $index"),
-                    subtitle: Text("Description $index"),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.edit),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.delete),
-                        ),
-                      ],
-                    ),
-                    leading: Checkbox(
-                      value: false,
-                      onChanged: (value) {},
-                    ),
-                    onLongPress: () {},
-                  );
-                },
-              ),
+              child: FutureBuilder(
+                  future: controller.getAllTodos(),
+                  builder: (context, snapshot) {
+                    return ListView.builder(
+                      itemCount: 100,
+                      padding: EdgeInsets.zero,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text("Todo $index"),
+                          subtitle: Text("Description $index"),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.edit),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.delete),
+                              ),
+                            ],
+                          ),
+                          leading: Checkbox(
+                            value: false,
+                            onChanged: (value) {},
+                          ),
+                          onLongPress: () {},
+                        );
+                      },
+                    );
+                  }),
             ),
           ),
         ],

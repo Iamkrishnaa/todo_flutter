@@ -1,20 +1,20 @@
-import 'package:http/http.dart' as http;
 import 'package:http_interceptor/http/http.dart';
-import 'package:todo/app/consts/app_apis.dart';
 import 'package:todo/app/services/remote/token_interceptor.dart';
+import 'package:http/http.dart' as http;
+import '../../consts/app_apis.dart';
 
-class TodoApiService {
+class RefreshTokenApiService {
   static final client = InterceptedClient.build(
     interceptors: [
-      TokenInterceptor(),
+      RefreshTokenInterceptor(),
     ],
-    retryPolicy: RefreshTokenretryPolicy(),
   );
 
-  Future getAllTodos() async {
+  Future refreshToken() async {
     try {
+      var url = Uri.parse(AppApis.refreshToken);
       http.Response response = await client.get(
-        Uri.parse(AppApis.getAllTodos),
+        url,
       );
       return response;
     } catch (e) {
