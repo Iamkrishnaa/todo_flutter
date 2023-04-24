@@ -13,7 +13,7 @@ class Todo {
   final int id;
   final String title;
   final String description;
-  final bool completed;
+  bool completed;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -22,6 +22,10 @@ class Todo {
 
   static String todoToJson(List<Todo> data) =>
       json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+  static Todo singleTodoFromJson(String str) => Todo.fromJson(json.decode(str));
+
+  static String singleTodoToJson(Todo data) => json.encode(data.toJson());
 
   factory Todo.fromJson(Map<String, dynamic> json) => Todo(
         id: json["id"],

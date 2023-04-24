@@ -6,4 +6,8 @@ class AppApis {
   static String get refreshToken => "$baseURL/auth/refresh";
 
   static String get getAllTodos => "$baseURL/todos/all";
+  static String get createTodo => "$baseURL/todos/create";
+  static String get deleteTodo => "$baseURL/todos";
+
+  static String get updateTodo => "$baseURL/todos";
 }
