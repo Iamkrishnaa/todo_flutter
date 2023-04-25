@@ -87,18 +87,54 @@ class HomeController extends GetxController {
 
   markTodoAsCompleted(int index, bool? value) async {
     try {
-      Todo todo = todos[index];
+      Todo todo = Todo(
+        id: todos[index].id,
+        title: todos[index].title,
+        description: todos[index].description,
+        completed: value ?? false,
+        createdAt: todos[index].createdAt,
+        updatedAt: todos[index].updatedAt,
+      );
 
       http.Response response = await TodoApiService().updateTodo(
         todo,
       );
-
-      log(response.body);
       var decodedResponse = jsonDecode(response.body);
       if (response.statusCode == 200) {
         todos[index].completed = value ?? false;
         todos.refresh();
       } else if (response.statusCode >= 400 && response.statusCode < 500) {
+        Helper.showToastMessage(message: decodedResponse["message"]);
+      } else {
+        throw Exception();
+      }
+    } catch (e) {
+      log(e.toString());
+      Helper.showToastMessage(message: "Something went wrong.");
+    }
+  }
+
+  updateTodo(int index) async {
+    try {
+      Todo todo = Todo(
+        id: todos[index].id,
+        title: editTitleController.text,
+        description: editDescriptionController.text,
+        completed: todos[index].completed,
+        createdAt: todos[index].createdAt,
+        updatedAt: todos[index].updatedAt,
+      );
+
+      http.Response response = await TodoApiService().updateTodo(
+        todo,
+      );
+
+      if (response.statusCode == 200) {
+        Todo updatedTodo = Todo.singleTodoFromJson(response.body);
+        todos[index] = updatedTodo;
+        todos.refresh();
+      } else if (response.statusCode >= 400 && response.statusCode < 500) {
+        var decodedResponse = jsonDecode(response.body);
         Helper.showToastMessage(message: decodedResponse["message"]);
       } else {
         throw Exception();

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:todo/app/consts/app_colors.dart';
 import 'package:todo/app/consts/text_form_field_styles.dart';
 import 'package:todo/app/data/models/todo/todo.dart';
+import 'package:todo/app/services/local/auth_service.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -20,7 +21,17 @@ class HomeView extends GetView<HomeController> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              Get.showOverlay(
+                asyncFunction: () async {
+                  AuthService authService = Get.put(AuthService());
+                  await authService.logout();
+                },
+                loadingWidget: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            },
             icon: const Icon(Icons.logout),
           ),
         ],
@@ -66,7 +77,10 @@ class HomeView extends GetView<HomeController> {
                                   IconButton(
                                     onPressed: () {
                                       _showEditTodoBottomModalSheet(
-                                          context, todo);
+                                        context,
+                                        todo,
+                                        index,
+                                      );
                                     },
                                     icon: const Icon(Icons.edit),
                                   ),
@@ -250,7 +264,11 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  _showEditTodoBottomModalSheet(BuildContext context, Todo todo) {
+  _showEditTodoBottomModalSheet(
+    BuildContext context,
+    Todo todo,
+    int index,
+  ) {
     controller.editTitleController.text = todo.title;
     controller.editDescriptionController.text = todo.description;
     showModalBottomSheet(
@@ -331,7 +349,7 @@ class HomeView extends GetView<HomeController> {
                               if (addTodoFormKey.currentState!.validate()) {
                                 Get.showOverlay(
                                   asyncFunction: () async {
-                                    //TODO: Need to implement edit todo
+                                    await controller.updateTodo(index);
                                     Get.back();
                                   },
                                   loadingWidget: const Center(

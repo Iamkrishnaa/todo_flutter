@@ -16,11 +16,19 @@ class StorageService extends GetxService {
     return sharedPreferences.getString("accessToken");
   }
 
+  deleteAccessToken() async {
+    await sharedPreferences.remove("accessToken");
+  }
+
   Future storeRefreshToken({required String refreshToken}) async {
     await sharedPreferences.setString("refreshToken", refreshToken);
   }
 
   geRefreshToken() {
     return sharedPreferences.getString("refreshToken");
+  }
+
+  deleteRefreshToken() async {
+    await sharedPreferences.remove("refreshToken");
   }
 }
