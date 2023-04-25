@@ -66,7 +66,10 @@ class HomeView extends GetView<HomeController> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      _showEditTodoBottomModalSheet(
+                                          context, todo);
+                                    },
                                     icon: const Icon(Icons.edit),
                                   ),
                                   IconButton(
@@ -225,6 +228,127 @@ class HomeView extends GetView<HomeController> {
                               padding: const EdgeInsets.all(12.0),
                               child: Text(
                                 "Create",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 12.0),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  _showEditTodoBottomModalSheet(BuildContext context, Todo todo) {
+    controller.editTitleController.text = todo.title;
+    controller.editDescriptionController.text = todo.description;
+    showModalBottomSheet(
+      context: context,
+      builder: (cx) {
+        return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 10),
+              Container(
+                height: 5,
+                width: 50,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: addTodoFormKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Edit todo",
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          decoration: TextFormFieldStyles
+                              .kRoundedInputDecorationNoBorder(
+                            radius: 6,
+                          ).copyWith(
+                            hintText: "Title",
+                            filled: true,
+                            fillColor: AppColors.primaryColor.withOpacity(0.2),
+                          ),
+                          controller: controller.editTitleController,
+                          validator: (description) {
+                            if (description!.trim().length <= 3) {
+                              return "Please Enter valid title";
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          maxLines: 5,
+                          decoration: TextFormFieldStyles
+                              .kRoundedInputDecorationNoBorder(
+                            radius: 6,
+                          ).copyWith(
+                            hintText: "Description",
+                            filled: true,
+                            fillColor: AppColors.primaryColor.withOpacity(0.2),
+                          ),
+                          controller: controller.editDescriptionController,
+                          validator: (description) {
+                            if (description!.trim().length <= 6) {
+                              return "Please Enter valid description";
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (addTodoFormKey.currentState!.validate()) {
+                                Get.showOverlay(
+                                  asyncFunction: () async {
+                                    //TODO: Need to implement edit todo
+                                    Get.back();
+                                  },
+                                  loadingWidget: const Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                );
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primaryColor,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "Update Todo",
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleLarge

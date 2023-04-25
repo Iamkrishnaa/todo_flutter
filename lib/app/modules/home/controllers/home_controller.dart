@@ -13,6 +13,9 @@ class HomeController extends GetxController {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
 
+  final editTitleController = TextEditingController();
+  final editDescriptionController = TextEditingController();
+
   var todos = <Todo>[].obs;
 
   getAllTodos() async {
